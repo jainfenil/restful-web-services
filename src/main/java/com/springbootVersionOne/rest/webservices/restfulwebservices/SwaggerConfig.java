@@ -15,9 +15,9 @@ import java.util.Set;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    public static final Contact DEFAULT_CONTACT = new Contact(
+    public static Contact DEFAULT_CONTACT = new Contact(
             "Fenil Jain", "http://spring@yahoo.com", "spring@yahoo.com");
-    public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Awesome API Title",
+    public static ApiInfo DEFAULT_API_INFO = new ApiInfo("Awesome API Title",
             "Awesome API Title Documentation","1.0",
             "urn:tos",DEFAULT_CONTACT,
             "Apache 2.0","http://www.apache.org/licenses/LICENSE-2.0");
