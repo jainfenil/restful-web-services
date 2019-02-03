@@ -2,13 +2,16 @@ package com.springbootVersionOne.rest.webservices.restfulwebservices.user;
 
 import com.springbootVersionOne.rest.webservices.restfulwebservices.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -25,12 +28,16 @@ public class UserResource {
 
     //retriveUser(int id)
     @GetMapping("/user/{id}")
-    public User retriveOneUser(@PathVariable int id){
+    public Resource<User> retriveOneUser(@PathVariable int id){
         User user = service.findOne(id);
         if(user==null){
             throw new UserNotFoundException("id-"+id);
         }else{
-            return user;
+            //hateoas link
+            Resource<User> resource = new Resource<User>(user);
+            ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retriveAllUsers());
+            resource.add(linkTo.withRel("all-users"));
+            return resource;
         }
     }
 
